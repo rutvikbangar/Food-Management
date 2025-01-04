@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:food_management/pages/dashboard.dart';
 import 'package:food_management/stores/theme_store.dart';
 import 'package:food_management/theme/themedata.dart';
 import 'package:provider/provider.dart';
+
+import 'add_plan.dart';
 
 class MyPlan extends StatefulWidget {
   MyPlan({super.key});
@@ -50,6 +53,7 @@ class _MyPlanState extends State<MyPlan> with SingleTickerProviderStateMixin {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: theme.primaryColor,
       appBar: AppBar(
         title: Text(
           "Food Management",
@@ -58,7 +62,13 @@ class _MyPlanState extends State<MyPlan> with SingleTickerProviderStateMixin {
         backgroundColor: theme.primaryColor,
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddPlan()),
+              );
+
+            },
             child: Row(
               children: [
                 Image.asset("assets/icons/add.png"),
@@ -99,28 +109,24 @@ class _MyPlanState extends State<MyPlan> with SingleTickerProviderStateMixin {
           ],
         ),
       ),
-      body: TabBarView(
-        controller: tabController,
-        children: [
+      body: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: TabBarView(
+          controller: tabController,
+          children: [
 
-          Dashboard(),
-          Center(child: Text("2 Tab Content")),
-          Center(child: Text("3 Tab Content")),
-          Center(child: Text("4 Tab Content")),
-        ],
+            Dashboard(),
+            Center(child: Text("2 Tab Content")),
+            Center(child: Text("3 Tab Content")),
+            Center(child: Text("4 Tab Content")),
+          ],
+        ),
       ),
     );
   }
 }
 
-class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("1d Tab Content"));
-  }
-}
 
 
 

@@ -1,0 +1,88 @@
+{
+  "plans": [
+    {
+      "id": 1,
+      "name": "Option Plan 1",
+      "frequency": "daily",
+      "amount": 500,
+      "meals": [
+        {
+          "id": 1,
+          "type": "Breakfast",
+          "startTime": "08:15 AM",
+          "endTime": "09:00 AM",
+          "items": [
+            { "diet": "veg", "name": "poha" }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "Lunch",
+          "startTime": "12:30 PM",
+          "endTime": "01:30 PM",
+          "items": [
+            { "diet": "veg", "name": "dal rice" },
+            { "diet": "veg", "name": "roti sabzi" }
+          ]
+        },
+        {
+          "id": 3,
+          "type": "Snack",
+          "startTime": "04:00 PM",
+          "endTime": "04:30 PM",
+          "items": [
+            { "diet": "veg", "name": "fruit salad" }
+          ]
+        },
+        {
+          "id": 4,
+          "type": "Dinner",
+          "startTime": "07:30 PM",
+          "endTime": "08:30 PM",
+          "items": [
+            { "diet": "veg", "name": "paneer curry" },
+            { "diet": "veg", "name": "butter naan" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": 2,
+      "name": "Option Plan 2",
+      "frequency": "daily",
+      "amount": 500,
+      "meals": [
+        {
+          "id": 1,
+          "type": "Breakfast",
+          "startTime": "07:30 AM",
+          "endTime": "08:30 AM",
+          "items": [
+            { "diet": "veg", "name": "idli sambar" }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "Lunch",
+          "startTime": "01:00 PM",
+          "endTime": "02:00 PM",
+          "items": [
+            { "diet": "veg", "name": "chole bhature" },
+            { "diet": "veg", "name": "cucumber salad" }
+          ]
+        },
+        {
+          "id": 3,
+          "type": "Snack",
+          "startTime": "05:00 PM",
+          "endTime": "05:30 PM",
+          "items": [
+            { "diet": "veg", "name": "samosa" }
+          ]
+        }
+
+      ]
+    }
+  ]
+}
