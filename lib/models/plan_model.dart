@@ -1,6 +1,7 @@
-import 'package:food_management/models/meal_model.dart';
 
 // one plan contain different meals
+import 'meal_model.dart';
+
 class Plan{
   final int id;
   final String name;

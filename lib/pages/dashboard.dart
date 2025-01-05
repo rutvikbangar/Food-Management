@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:food_management/models/meal_model.dart';
 import 'package:food_management/models/plan_model.dart';
 import 'package:food_management/services/api_service.dart';
@@ -6,55 +7,62 @@ import 'package:food_management/stores/theme_store.dart';
 import 'package:food_management/theme/themedata.dart';
 import 'package:provider/provider.dart';
 
+import '../stores/meal_plan_store.dart';
+
 class Dashboard extends StatefulWidget {
-   Dashboard({super.key});
+  Dashboard({super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
-  final api = ApiLayer();
-  Future<MealPlans>? _mealPlans ;
+  bool _loading = true;
+
   @override
   void initState() {
-    // TODO: implement initState
-    _mealPlans =  api.fecthMealPlans();
     super.initState();
+    final store = Provider.of<MealPlanStore>(context, listen: false);
+    store.loadInitialPlans(ApiLayer()).then((_) {
+      setState(() {
+        _loading = false;
+      });
+    });
   }
+
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
-    return FutureBuilder(
-        future: _mealPlans,
-        builder: (context,snapshot){
-          if(snapshot.connectionState == ConnectionState.waiting){
-            return Center(child: CircularProgressIndicator(color: theme.colorScheme.secondary ),);
-          }
-          else if(!snapshot.hasData){
-            return Center(child: Text("No meal plan available"),);
-          }
-          else{
-              final mealplan = snapshot.data!;
-              return ListView.builder(
-                  itemCount: mealplan.plans.length,
-                  itemBuilder: (context,index){
-                    final currentplan = mealplan.plans[index];
-                    final currmealitem = currentplan.meals;
-                    int n = currmealitem.length ;
-                    return PlanTemplate(height: height, width: width, theme: theme, currentplan: currentplan, n: n, currmealitem: currmealitem);
-                  }
+    final store = Provider.of<MealPlanStore>(context);
 
-              );
-          }
+    return Observer(
+      builder: (_) {
+        if (_loading) {
+          return Center(child: CircularProgressIndicator(color: bluishColor ,));
         }
 
-
+        if (store.plans.isEmpty) {
+          return Center(child: Text("No meal plan available"));
+        } else {
+          return ListView.builder(
+            itemCount: store.plans.length,
+            itemBuilder: (context, index) {
+              final currentPlan = store.plans[index];
+              return PlanTemplate(
+                currentplan: currentPlan,
+                currmealitem: currentPlan.meals,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                theme: Theme.of(context),
+                n: currentPlan.meals.length,
+              );
+            },
+          );
+        }
+      },
     );
   }
 }
+
 
 class PlanTemplate extends StatelessWidget {
   const PlanTemplate({
@@ -80,7 +88,8 @@ class PlanTemplate extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: height*0.0096,horizontal: width*0.055),
       child: Container(
-        height: height*0.185,
+
+        height: n<=2 ? height*0.15 : height*0.185,
         width: width*0.88,
         decoration: BoxDecoration(
           color: theme.primaryColor,
