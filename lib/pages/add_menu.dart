@@ -26,14 +26,26 @@ class _AddMenuState extends State<AddMenu> {
     "Snacks": [],
     "Dinner": [],
   };
+  final Map<String, String> mealTimes = {
+    "Breakfast": "",
+    "Lunch": "",
+    "Snacks": "",
+    "Dinner": "",
+  };
 
-  void addItemType(String meal, TextEditingController controller, bool isVeg) {
+
+  void addItemType(String meal, TextEditingController controller, bool isVeg, String startTime, String endTime) {
     if (controller.text.isNotEmpty) {
       setState(() {
+        // Store the time range for the meal
+        mealTimes[meal] = "$startTime to $endTime";
+
+        // Add the dish to the mealItems list
         mealItems[meal]!.add({
           "name": controller.text,
           "type": isVeg ? "veg" : "nonveg",
         });
+
         controller.clear();
       });
     }
@@ -41,11 +53,18 @@ class _AddMenuState extends State<AddMenu> {
 
 
 
+
   Future<void> saveAllMealData() async {
-    await saveMealData("Breakfast", mealItems["Breakfast"]!);
-    await saveMealData("Lunch", mealItems["Lunch"]!);
-    await saveMealData("Snacks", mealItems["Snacks"]!);
-    await saveMealData("Dinner", mealItems["Dinner"]!);
+    try{
+
+      await saveMealData("Breakfast", mealItems["Breakfast"]!,mealTimes["Breakfast"]!);
+      await saveMealData("Lunch", mealItems["Lunch"]!,mealTimes["Lunch"]!);
+      await saveMealData("Snacks", mealItems["Snacks"]!,mealTimes["Snacks"]!);
+      await saveMealData("Dinner", mealItems["Dinner"]!,mealTimes["Dinner"]!);
+    }catch(e){
+      print("ERROR CAUGHT AT SAVEMEALDATA] $e");
+    }
+
 
   }
 
@@ -137,7 +156,7 @@ class _AddMenuState extends State<AddMenu> {
 class MealSection extends StatefulWidget {
   final String meal;
   final List<Map<String, String>> items;
-  final Function(String meal, TextEditingController controller, bool isVeg) onAddItemType;
+  final Function(String meal, TextEditingController controller, bool isVeg,String startTime, String endTime) onAddItemType;
   final TextEditingController itemController;
   final String image;
 
@@ -177,7 +196,7 @@ class _MealSectionState extends State<MealSection> {
 
     if (pickedTime != null) {
       timeController.text = pickedTime.format(context);
-      print("TIME CONTROLLER TEXT------- ${timeController.text}");
+      print("TIME CONTROLLER TEXT-- ${timeController.text}");
     }
   }
 
@@ -357,7 +376,12 @@ class _MealSectionState extends State<MealSection> {
             child: IconButton(
               icon: Icon(Icons.add, color: Colors.white),
               onPressed: () {
-                widget.onAddItemType(widget.meal, widget.itemController, isVeg);
+                if(sttimeController.text.isEmpty || eddtimeController.text.isEmpty){
+                  showSnackbar(context, Colors.red, "select time");
+                }else{
+                  widget.onAddItemType(widget.meal, widget.itemController, isVeg,sttimeController.text,eddtimeController.text);
+                }
+
               },
             ),
           ),

@@ -119,7 +119,7 @@ class _MyPlanState extends State<MyPlan> with SingleTickerProviderStateMixin {
 
             Dashboard(),
             Menu(),
-            Center(child: ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>AddMenu()));}, child: Text("add menu",style: TextStyle(color: Colors.black),))),
+            Center(child: Text("3 Tab Content")),
             Center(child: Text("4 Tab Content")),
           ],
         ),

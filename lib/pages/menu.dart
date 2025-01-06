@@ -25,7 +25,7 @@ class Menu extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
 
-        if (mealStore.mealItems == null || mealStore.mealItems.isEmpty) {
+        if (mealStore.mealTimes == null || mealStore.mealTimes.isEmpty) {
           return Center(
             child: TextButton(
               style: ButtonStyle(
@@ -38,6 +38,7 @@ class Menu extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => AddMenu()),
                 );
+
               },
               child: Text(
                 "Add Today's Menu",
@@ -48,40 +49,66 @@ class Menu extends StatelessWidget {
         }
 
 
-        return ListView.builder(
-          itemCount: mealStore.mealItems.length,
-          itemBuilder: (context, index) {
-            String mealType = mealStore.mealItems.keys.elementAt(index);
-            List<MealItem>? items = mealStore.mealItems[mealType];
-
-            return Card(
-              color: theme.primaryColor,
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      mealType,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 20,fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(height: 8),
-                    if (items != null && items.isNotEmpty)
-                      ...items.map((item) => Text(
-                        "${item.name} (${item.type})",
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      )),
-                    if (items == null || items.isEmpty)
-                      Text(
-                        "No items available",
-                        style: Theme.of(context).textTheme.bodyMedium,
+        return Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: mealStore.mealItems.length,
+                itemBuilder: (context, index) {
+                  String mealType = mealStore.mealItems.keys.elementAt(index);
+                  List<MealItem>? items = mealStore.mealItems[mealType];
+                  String? timeRange = mealStore.mealTimes[mealType];
+              
+                  return Card(
+                    color: theme.primaryColor,
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "$mealType at $timeRange ",
+                            style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 20,fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(height: 8),
+                          if (items != null && items.isNotEmpty)
+                            ...items.map((item) => Text(
+                              "${item.name} (${item.type})",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            )),
+                          if (items == null || items.isEmpty)
+                            Text(
+                              "No items available",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                        ],
                       ),
-                  ],
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            TextButton(
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(
+                  Theme.of(context).colorScheme.secondary,
                 ),
               ),
-            );
-          },
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddMenu()),
+                );
+
+              },
+              child: Text(
+                "Add Today's Menu",
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
+          ],
         );
       },
     );

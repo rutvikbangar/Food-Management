@@ -11,6 +11,9 @@ abstract class _MealStoreBase with Store {
   Map<String, List<MealItem>?> mealItems = {};
 
   @observable
+  Map<String, String?> mealTimes = {};
+
+  @observable
   bool isLoading = true;
 
   @action
@@ -18,20 +21,27 @@ abstract class _MealStoreBase with Store {
     isLoading = true;
     try {
       List<MealItem>? data = await getMealData(mealType);
+      String? timeRange = await getMealTime(mealType);
+
       mealItems[mealType] = data;
-      if (data == null || data.isEmpty) {
+      if(timeRange != null){
+        mealTimes[mealType] = timeRange;
+      }
+
+      if (data == null) {
         print("NO MEAL DATA FOUND FOR $mealType.");
       }
     } catch (e) {
       print("-------ERROR ----- === $e");
       mealItems[mealType] = null;
+      mealTimes[mealType] = null;
     }
     isLoading = false;
   }
 
   @action
-  Future<void> saveMealData(String mealType, List<Map<String, String>> items) async {
-    await saveMealData(mealType, items);
+  Future<void> saveMealData(String mealType, List<Map<String, String>> items,String timerange) async {
+    await saveMealData(mealType, items,timerange);
   }
 
   @action

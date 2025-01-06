@@ -25,6 +25,22 @@ mixin _$MealStore on _MealStoreBase, Store {
     });
   }
 
+  late final _$mealTimesAtom =
+      Atom(name: '_MealStoreBase.mealTimes', context: context);
+
+  @override
+  Map<String, String?> get mealTimes {
+    _$mealTimesAtom.reportRead();
+    return super.mealTimes;
+  }
+
+  @override
+  set mealTimes(Map<String, String?> value) {
+    _$mealTimesAtom.reportWrite(value, super.mealTimes, () {
+      super.mealTimes = value;
+    });
+  }
+
   late final _$isLoadingAtom =
       Atom(name: '_MealStoreBase.isLoading', context: context);
 
@@ -53,9 +69,10 @@ mixin _$MealStore on _MealStoreBase, Store {
       AsyncAction('_MealStoreBase.saveMealData', context: context);
 
   @override
-  Future<void> saveMealData(String mealType, List<Map<String, String>> items) {
+  Future<void> saveMealData(
+      String mealType, List<Map<String, String>> items, String timerange) {
     return _$saveMealDataAsyncAction
-        .run(() => super.saveMealData(mealType, items));
+        .run(() => super.saveMealData(mealType, items, timerange));
   }
 
   late final _$_MealStoreBaseActionController =
@@ -76,6 +93,7 @@ mixin _$MealStore on _MealStoreBase, Store {
   String toString() {
     return '''
 mealItems: ${mealItems},
+mealTimes: ${mealTimes},
 isLoading: ${isLoading}
     ''';
   }

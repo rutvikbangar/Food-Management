@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:food_management/models/meal_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<void> saveMealData(String mealType, List<Map<String, String>> items) async {
+Future<void> saveMealData(String mealType, List<Map<String, String>> items,String timeRange) async {
   if (items.isNotEmpty) {
     final sf = await SharedPreferences.getInstance();
     final timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -10,6 +10,7 @@ Future<void> saveMealData(String mealType, List<Map<String, String>> items) asyn
 
     await sf.setString('${mealType}_data', itemsJson);
     await sf.setInt('${mealType}_timestamp', timestamp);
+    await sf.setString("${mealType}_timerange", timeRange);
   }
 }
 
@@ -22,6 +23,7 @@ Future<List<MealItem>?> getMealData(String mealType) async {
   if (savedTimestamp != null && (currentTime - savedTimestamp) > oneday) {
     await sf.remove('${mealType}_data');
     await sf.remove('${mealType}_timestamp');
+    await sf.remove("${mealType}_timerange");
     return null;
   }
 
@@ -35,3 +37,20 @@ Future<List<MealItem>?> getMealData(String mealType) async {
 
   return null;
 }
+
+Future<String?> getMealTime(String mealType) async {
+  final sf = await SharedPreferences.getInstance();
+  final savedTimestamp = sf.getInt('${mealType}_timestamp');
+  final currentTime = DateTime.now().millisecondsSinceEpoch;
+  final oneday = 24 * 60 * 60 * 1000;
+
+  if (savedTimestamp != null && (currentTime - savedTimestamp) > oneday) {
+    await sf.remove('${mealType}_data');
+    await sf.remove('${mealType}_timestamp');
+    await sf.remove("${mealType}_timerange");
+    return null;
+  }
+
+  return sf.getString('${mealType}_timerange');
+}
+
