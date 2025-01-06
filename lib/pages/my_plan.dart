@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_management/pages/add_menu.dart';
 import 'package:food_management/pages/dashboard.dart';
+import 'package:food_management/pages/menu.dart';
 import 'package:food_management/stores/theme_store.dart';
 import 'package:food_management/theme/themedata.dart';
 import 'package:provider/provider.dart';
@@ -116,8 +118,8 @@ class _MyPlanState extends State<MyPlan> with SingleTickerProviderStateMixin {
           children: [
 
             Dashboard(),
-            Center(child: Text("2 Tab Content")),
-            Center(child: Text("3 Tab Content")),
+            Menu(),
+            Center(child: ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>AddMenu()));}, child: Text("add menu",style: TextStyle(color: Colors.black),))),
             Center(child: Text("4 Tab Content")),
           ],
         ),

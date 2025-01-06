@@ -15,7 +15,7 @@ class ApiLayer{
     Future<File> _getLocalFile() async {
       final directory = await getApplicationDocumentsDirectory();
       final file = File('${directory.path}/sample_meal.json');
-      print("------- FILE PATH IS ------ ${file.path}");
+
       return file;
     }
 

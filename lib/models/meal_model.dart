@@ -1,21 +1,27 @@
 
-// //A basic mealitem present in breakfast,lunch,dinner etc
-// class MealItem{
-//   final String diet;
-//   final String name;
-//   MealItem({required this.diet,required this.name});
-//
-//   factory MealItem.fromJson(Map<String,dynamic> json){
-//     return MealItem(diet: json['diet'], name: json['name']);
-//   }
-//
-//   Map<String,dynamic> toJson() {
-//     return {
-//       'diet': diet,
-//       'name': name,
-//     };
-//   }
-// }
+//A basic mealitem present in breakfast,lunch,dinner etc
+class MealItem {
+  final String name;
+  final String type;
+
+  MealItem({required this.name, required this.type});
+
+  factory MealItem.fromJson(Map<String, dynamic> json) {
+    return MealItem(
+      name: json['name'],
+      type: json['type'],
+    );
+  }
+
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'type': type,
+    };
+  }
+}
+
 
 // Single meal item
 class Meal{

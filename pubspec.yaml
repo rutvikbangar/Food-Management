@@ -38,6 +38,7 @@ dependencies:
   flutter_mobx: ^2.0.0
   provider:
   path_provider:
+  shared_preferences:
 
 
 dev_dependencies:

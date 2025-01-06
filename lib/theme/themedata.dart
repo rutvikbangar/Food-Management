@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 final Color lightBackground = Color(0xffFFFFFF);
+final Color borderColor = Color(0xffA6A6A6);
 final Color bluishColor = Color(0x401071A3);
 final Color greyColor = Color(0xffF5F5F5);
 final Color darkgreyColor = Color(0xffBABABA);
@@ -10,7 +11,7 @@ final Color darkBluish = Color(0xff393F5E);
 
 
 final ThemeData lightTheme = ThemeData(
-
+  brightness: Brightness.light,
   primaryColor: lightBackground,
   colorScheme: ColorScheme.light(
     primary: greyColor,
@@ -25,7 +26,7 @@ final ThemeData lightTheme = ThemeData(
 );
 
 final ThemeData darkTheme = ThemeData(
-
+  brightness: Brightness.dark,
   primaryColor: darkBackground,
   colorScheme: ColorScheme.dark(
     primary: darkgreyColor,
