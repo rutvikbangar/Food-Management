@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_management/pages/my_plan.dart';
+import 'package:food_management/pages/dashboard.dart';
 import 'package:food_management/theme/themedata.dart';
 import 'package:food_management/widgets/snackbar_widget.dart';
 import 'package:provider/provider.dart';
@@ -127,7 +127,7 @@ class _AddMenuState extends State<AddMenu> {
                     await saveAllMealData();
                     Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => MyPlan())
+                        MaterialPageRoute(builder: (context) => DashboardPage())
                     );
                   }
                 },

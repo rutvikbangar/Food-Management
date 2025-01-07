@@ -1,7 +1,7 @@
     import 'package:flutter/material.dart';
     import 'package:food_management/models/meal_model.dart';
     import 'package:food_management/models/plan_model.dart';
-    import 'package:food_management/pages/my_plan.dart';
+    import 'package:food_management/pages/dashboard.dart';
     import 'package:food_management/services/api_service.dart';
     import 'package:food_management/widgets/snackbar_widget.dart';
     import 'package:provider/provider.dart';
@@ -413,7 +413,7 @@
           showSnackbar(context, Colors.green, "Plan saved successfully!");
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => MyPlan()),
+            MaterialPageRoute(builder: (context) => DashboardPage()),
           );
         }
       }

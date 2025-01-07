@@ -29,7 +29,7 @@ abstract class _MealStoreBase with Store {
       }
 
       if (data == null) {
-        print("NO MEAL DATA FOUND FOR $mealType.");
+
       }
     } catch (e) {
       print("-------ERROR ----- === $e");

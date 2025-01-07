@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:food_management/pages/my_plan.dart';
+import 'package:food_management/pages/dashboard.dart';
 import 'package:food_management/stores/meal_plan_store.dart';
 import 'package:food_management/stores/meal_store.dart';
 import 'package:food_management/stores/theme_store.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     return Observer(builder: (_){
       return MaterialApp(
         theme: themestore.isDarkMode ? darkTheme : lightTheme,
-        home: MyPlan(),
+        home: DashboardPage(),
       );
     });
   }
