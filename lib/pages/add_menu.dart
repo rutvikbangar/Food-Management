@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_management/pages/dashboard.dart';
 import 'package:food_management/theme/themedata.dart';
+import 'package:food_management/widgets/custom_widget.dart';
 import 'package:food_management/widgets/snackbar_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -89,7 +90,7 @@ class _AddMenuState extends State<AddMenu> {
                 items: mealItems["Breakfast"]!,
                 onAddItemType: addItemType,
                 itemController: breakfastController,
-                image: "assets/images/breakfast.png",
+                image: "assets/images/breakfast.svg",
               ),
               SizedBox(height: height * 0.022),
               MealSection(
@@ -97,7 +98,7 @@ class _AddMenuState extends State<AddMenu> {
                 items: mealItems["Lunch"]!,
                 onAddItemType: addItemType,
                 itemController: lunchController,
-                image: "assets/images/lunch.png",
+                image: "assets/images/lunch.svg",
               ),
               SizedBox(height: height * 0.022),
               MealSection(
@@ -105,7 +106,7 @@ class _AddMenuState extends State<AddMenu> {
                 items: mealItems["Snacks"]!,
                 onAddItemType: addItemType,
                 itemController: snacksController,
-                image: "assets/images/snacks.png",
+                image: "assets/images/snacks.svg",
               ),
               SizedBox(height: height * 0.022),
               MealSection(
@@ -113,7 +114,7 @@ class _AddMenuState extends State<AddMenu> {
                 items: mealItems["Dinner"]!,
                 onAddItemType: addItemType,
                 itemController: dinnerController,
-                image: "assets/images/dinner.png",
+                image: "assets/images/dinner.svg",
               ),
               SizedBox(height: height * 0.022),
               GestureDetector(
@@ -125,7 +126,7 @@ class _AddMenuState extends State<AddMenu> {
                     showSnackbar(context, Colors.red, "All fields are required");
                   } else {
                     await saveAllMealData();
-                    Navigator.pushReplacement(
+                    Navigator.pop(
                         context,
                         MaterialPageRoute(builder: (context) => DashboardPage())
                     );
@@ -214,6 +215,16 @@ class _MealSectionState extends State<MealSection> {
           margin: const EdgeInsets.only(bottom: 16.0),
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
+            color: theme.primaryColor,
+            boxShadow: [
+
+              BoxShadow(
+                color: Color(0x1A000000),
+                offset: Offset(0, 1),
+                blurRadius: 3,
+                spreadRadius: 0,
+              ),
+            ],
             border: Border.all(color: borderColor),
             borderRadius: BorderRadius.circular(8.0),
           ),
@@ -225,7 +236,7 @@ class _MealSectionState extends State<MealSection> {
                   Container(
                     height: 24,
                     width: 24,
-                    child: Image.asset(widget.image),
+                    child: MyIcon(iconPath: widget.image,color:themeStore.isDarkMode? borderColor : iconColor ,),
                   ),
                   SizedBox(width: 10),
                   Text(
@@ -234,8 +245,6 @@ class _MealSectionState extends State<MealSection> {
                   ),
                 ],
               ),
-              SizedBox(height: 12),
-              Text("${widget.meal} List", style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w400)),
               SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -248,6 +257,56 @@ class _MealSectionState extends State<MealSection> {
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Text("Start Time", style: TextStyle(color: textColor, fontSize: 11)),
                       ),
+                      Row(
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            width: width * 0.37,
+                            height: height * 0.048,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: borderColor),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: sttimeController,
+                                    readOnly: true,
+                                    style: TextStyle(
+                                      color:themeStore.isDarkMode? (sttimeController.text.isNotEmpty ? Colors.white : Colors.white) : (sttimeController.text.isNotEmpty ? Colors.black : Colors.black),
+                                    ),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                                      hintText: "Start Time",
+                                      hintStyle: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color:Color(0xff717171) ),
+                                    ),
+                                    onTap: ()=> _selectTime(context, sttimeController),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: MyIcon(iconPath: "assets/images/clock.svg"
+                                    ,color: themeStore.isDarkMode? borderColor : iconColor ,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  // End Time
+                  Column(
+
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text("End Time", style: TextStyle(color: textColor, fontSize: 11)),
+                      ),
                       Container(
                         alignment: Alignment.center,
                         width: width * 0.37,
@@ -256,47 +315,31 @@ class _MealSectionState extends State<MealSection> {
                           border: Border.all(color: borderColor),
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        child: TextField(
-                          controller: sttimeController,
-                          readOnly: true,
-                          style: TextStyle(
-                            color: sttimeController.text.isNotEmpty ? Colors.black : Colors.black,
-                          ),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                          ),
-                          onTap: ()=> _selectTime(context, sttimeController),
-                        ),
-                      ),
-                    ],
-                  ),
-                  // End Time
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text("End Time", style: TextStyle(color: textColor, fontSize: 11)),
-                      ),
-                      Container(
-                        width: width * 0.37,
-                        height: height * 0.048,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: borderColor),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: TextField(
-                          controller: eddtimeController,
-                          readOnly: true,
-                          style: TextStyle(
-                            color: eddtimeController.text.isNotEmpty ? Colors.black : Colors.black,
-                          ),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                          ),
-                          onTap: ()=> _selectTime(context, eddtimeController),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: eddtimeController,
+                                readOnly: true,
+                                style: TextStyle(
+                                  color: themeStore.isDarkMode?(eddtimeController.text.isNotEmpty ? Colors.white : Colors.white) :(eddtimeController.text.isNotEmpty ? Colors.black : Colors.black),
+                                ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "End Time",
+                                  hintStyle: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color:Color(0xff717171) ),
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                                ),
+                                onTap: ()=> _selectTime(context, eddtimeController),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: MyIcon(iconPath: "assets/images/clock.svg"
+                              ,color: themeStore.isDarkMode? borderColor : iconColor ,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -304,57 +347,73 @@ class _MealSectionState extends State<MealSection> {
                 ],
               ),
 
+              SizedBox(height: 12),
+              Text("${widget.meal} List", style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w400)),
+              SizedBox(height: 8,),
+              ...widget.items.map((item) => AddedItem(themeStore: themeStore, theme: theme,name: item["name"]!,type: item["type"]!,)),
               Row(
                 children: [
                   Expanded(
                     child: TextField(
+                      style: TextStyle(
+                        fontSize: 12,fontWeight: FontWeight.w400,
+                        color: themeStore.isDarkMode?borderColor:iconColor,
+                      ),
                       controller: widget.itemController,
+                      decoration: InputDecoration(
+                        hintText: "Enter Item",
+                        hintStyle: TextStyle(fontSize: 12,fontWeight: FontWeight.w400,color: themeStore.isDarkMode?borderColor: Color(0xff717171)),
+                      ),
                     ),
                   ),
                   SizedBox(width: 10),
-                  Image.asset("assets/images/veg.png"),
-                  Checkbox(
-                    checkColor: textColor,
-                    activeColor: Colors.white,
-                    value: isVeg,
-                    onChanged: (bool? value) {
-                      if (value != null) {
-                        setState(() {
-                          isVeg = true;
-                        });
-                      }
-                    },
+                  MyIcon(iconPath: "assets/images/veg.svg",color: Color(0xff018D0E),size: 16,),
+                  Theme(
+                    data: ThemeData(
+                      checkboxTheme: CheckboxThemeData(
+                        side: BorderSide(color: borderColor, width: 1.5),
+                        fillColor: WidgetStateProperty.all(theme.primaryColor),
+                      ),
+                    ),
+                    child: Checkbox(
+                      checkColor: themeStore.isDarkMode? darktextColor : textColor,
+                      //activeColor: Colors.white,
+                      value: isVeg,
+                      onChanged: (bool? value) {
+                        if (value != null) {
+                          setState(() {
+                            isVeg = true;
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  Image.asset("assets/images/nonveg.png"),
-                  Checkbox(
-                    checkColor: textColor,
-                    activeColor: Colors.white,
-                    value: !isVeg,
-                    onChanged: (bool? value) {
-                      if (value != null) {
-                        setState(() {
-                          isVeg = false;
-                        });
-                      }
-                    },
+                  SizedBox(width: 10,),
+                  MyIcon(iconPath: "assets/images/nonveg.svg",color:Color(0xffD34B26) ,size: 16,),
+                  Theme(
+                    data: ThemeData(
+                      checkboxTheme: CheckboxThemeData(
+                        side: BorderSide(color: borderColor, width: 1.5),
+                        fillColor: WidgetStateProperty.all(theme.primaryColor),
+                      ),
+                    ),
+                    child: Checkbox(
+                      checkColor: themeStore.isDarkMode? darktextColor : textColor,
+                      
+                      //activeColor: Colors.white,
+                      value: !isVeg,
+                      onChanged: (bool? value) {
+                        if (value != null) {
+                          setState(() {
+                            isVeg = false;
+                          });
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),
               SizedBox(height: 12),
-              ...widget.items.map((item) => ListTile(
-                title: Text(item["name"]!),
-                leading: IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    setState(() {
-                      widget.items.remove(item);
-                    });
-                  },
-                ),
-                trailing: Image.asset(
-                  item["type"] == "veg" ? "assets/images/veg.png" : "assets/images/nonveg.png",
-                ),
-              )),
             ],
           ),
         ),
@@ -387,6 +446,83 @@ class _MealSectionState extends State<MealSection> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class AddedItem extends StatelessWidget {
+  const AddedItem({
+    super.key,
+    required this.themeStore,
+    required this.theme,
+    required this.name,
+    required this.type
+
+  });
+
+  final ThemeStore themeStore;
+  final ThemeData theme;
+  final String name;
+  final String type;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(name,overflow: TextOverflow.ellipsis,style: TextStyle(
+          fontSize: 12,fontWeight: FontWeight.w400,
+          color: themeStore.isDarkMode?borderColor:iconColor,
+        ),),
+        Spacer(),
+        MyIcon(iconPath: "assets/images/veg.svg",color: type == "veg"? Color(0xff018D0E) : Color(0xff018D0E).withOpacity(0.25),size: 16,),
+        Theme(
+          data: ThemeData(
+            checkboxTheme: CheckboxThemeData(
+              side: BorderSide(color: type == "veg"? borderColor : borderColor.withOpacity(0.25), width: 1.5),
+              fillColor: WidgetStateProperty.all(theme.primaryColor),
+            ),
+          ),
+          child: Checkbox(
+            checkColor: themeStore.isDarkMode? darktextColor : textColor,
+            //activeColor: Colors.white,
+            value: type == "veg"?true:false,
+            onChanged: (bool? value) {
+
+            },
+          ),
+        ),
+        SizedBox(width: 10,),
+        MyIcon(iconPath: "assets/images/nonveg.svg",color: type!="veg"? Color(0xffD34B26) : Color(0xffD34B26).withOpacity(0.25),size: 16,),
+        Theme(
+          data: ThemeData(
+            checkboxTheme: CheckboxThemeData(
+              side: BorderSide(color: type!= "veg"? borderColor : borderColor.withOpacity(0.25), width: 1.5),
+              fillColor: WidgetStateProperty.all(theme.primaryColor),
+            ),
+          ),
+          child: Checkbox(
+            checkColor: themeStore.isDarkMode? darktextColor : textColor,
+            //activeColor: Colors.white,
+            value: type == "veg"?false: true,
+            onChanged: (bool? value) {
+            },
+          ),
+        ),
+      ],
+
+
+      // leading: IconButton(
+      //   icon: Icon(Icons.delete),
+      //   onPressed: () {
+      //     setState(() {
+      //       widget.items.remove(item);
+      //     });
+      //   },
+      // ),
+
+
+
+
     );
   }
 }

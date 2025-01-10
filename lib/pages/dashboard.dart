@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:food_management/pages/add_menu.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:food_management/pages/my_plan.dart';
 import 'package:food_management/pages/menu.dart';
 import 'package:food_management/stores/theme_store.dart';
 import 'package:food_management/theme/themedata.dart';
+import 'package:food_management/widgets/custom_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'add_plan.dart';
@@ -19,12 +21,12 @@ class DashboardPage extends StatefulWidget {
     },
   );
 
-  List<String> labels = ["Meal Plan", "Menu", "Track", "Feedback"];
+  List<String> labels = ["Meal Plan", "Menu", "Meal Track", "Feedback"];
   List<String> img = [
-    "assets/images/meal_plan.png",
-    "assets/images/Menu.png",
-    "assets/images/meal_track.png",
-    "assets/images/feedback.png"
+    "assets/images/meal_plan.svg",
+    "assets/images/menu.svg",
+    "assets/images/meal_track.svg",
+    "assets/images/feedback.svg"
   ];
 
   @override
@@ -73,11 +75,14 @@ class _DashboardPageState extends State<DashboardPage> with SingleTickerProvider
             },
             child: Row(
               children: [
-                Image.asset("assets/icons/add.png"),
+                MyIcon(
+                    iconPath: "assets/icons/add.svg",
+                    color: themeStore.isDarkMode? darktextColor : textColor,
+                ),
                 SizedBox(width: 5),
                 Text(
                   "Add Plan",
-                  style: TextStyle(color: textColor),
+                  style: TextStyle(color: themeStore.isDarkMode? darktextColor : textColor),
                 )
               ],
             ),
@@ -92,24 +97,46 @@ class _DashboardPageState extends State<DashboardPage> with SingleTickerProvider
             },
           ),
         ],
-        bottom: TabBar(
+        bottom:TabBar(
           controller: tabController,
-          indicatorColor: textColor,
+          indicatorSize: TabBarIndicatorSize.tab,
+          indicatorPadding: EdgeInsets.symmetric(horizontal: width * 0.02),
+          indicatorColor: themeStore.isDarkMode? darktextColor: textColor,
           dividerColor: Colors.transparent,
           labelColor: textColor,
-          unselectedLabelColor: themeStore.isDarkMode? Color(0xffBABABA) : Color(0xff454545),
+          unselectedLabelColor: themeStore.isDarkMode ? Color(0xffBABABA) : Color(0xff454545),
           tabs: [
             for (int i = 0; i < widget.labels.length; i++)
               Tab(
-                child: Column(
-                  children: [
-                    Image.asset(widget.img[i]),
-                    Text(widget.labels[i],)
-                  ],
+                child: Container(
+
+
+                  child: Column(
+                    children: [
+                      AnimatedBuilder(
+                        animation: tabController!,
+                        builder: (context, _) {
+                          bool isSelected = tabController!.index == i;
+                          return MyIcon(
+                            iconPath: widget.img[i],
+                            color: isSelected
+                                ? (themeStore.isDarkMode ? darktextColor : textColor)
+                                : (themeStore.isDarkMode ? darkgreyColor : iconColor),
+                          );
+                        },
+                      ),
+                      Text(
+                        widget.labels[i],
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ],
+                  ),
                 ),
               ),
           ],
         ),
+
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 8.0),

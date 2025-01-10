@@ -30,7 +30,9 @@ class MyApp extends StatelessWidget {
     final themestore = Provider.of<ThemeStore>(context);
     return Observer(builder: (_){
       return MaterialApp(
-        theme: themestore.isDarkMode ? darkTheme : lightTheme,
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        themeMode: themestore.isDarkMode?ThemeMode.dark : ThemeMode.light ,
         home: DashboardPage(),
       );
     });

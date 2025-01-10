@@ -24,6 +24,22 @@ mixin _$MealPlanStore on _MealPlanStore, Store {
     });
   }
 
+  late final _$isloadingAtom =
+      Atom(name: '_MealPlanStore.isloading', context: context);
+
+  @override
+  bool get isloading {
+    _$isloadingAtom.reportRead();
+    return super.isloading;
+  }
+
+  @override
+  set isloading(bool value) {
+    _$isloadingAtom.reportWrite(value, super.isloading, () {
+      super.isloading = value;
+    });
+  }
+
   late final _$loadInitialPlansAsyncAction =
       AsyncAction('_MealPlanStore.loadInitialPlans', context: context);
 
@@ -49,7 +65,8 @@ mixin _$MealPlanStore on _MealPlanStore, Store {
   @override
   String toString() {
     return '''
-plans: ${plans}
+plans: ${plans},
+isloading: ${isloading}
     ''';
   }
 }

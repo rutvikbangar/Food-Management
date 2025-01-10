@@ -3,6 +3,7 @@
     import 'package:food_management/models/plan_model.dart';
     import 'package:food_management/pages/dashboard.dart';
     import 'package:food_management/services/api_service.dart';
+import 'package:food_management/widgets/custom_widget.dart';
     import 'package:food_management/widgets/snackbar_widget.dart';
     import 'package:provider/provider.dart';
     import '../stores/meal_plan_store.dart';
@@ -92,7 +93,7 @@
                         hintText: 'Enter Plan Name',
                         hintStyle: theme.textTheme.titleMedium?.copyWith(color: _textColor),
                         prefixIcon: Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
+                          padding: const EdgeInsets.only(right: 9.0),
                           child: Container(
                             alignment: Alignment.center,
                             height: 32,
@@ -101,14 +102,17 @@
                               color: themeStore.isDarkMode ? darkBluish : greyColor,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Image.asset("assets/images/title.png"),
+                            child: MyIcon(
+                                iconPath: "assets/images/title.svg",
+                                color: themeStore.isDarkMode? darkgreyColor: iconColor,
+                            ),
                           ),
                         ),
                         border: InputBorder.none,
                       ),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 14),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -140,13 +144,17 @@
 
                     ],
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 14),
                   Container(
                     padding: EdgeInsets.only(right: 8),
-                    height: height * 0.25,
+
                     width: width * 0.90,
                     decoration: BoxDecoration(
                       color: themeStore.isDarkMode ? darkBluish : greyColor,
+                      border: Border.all(
+                        color: borderColor.withOpacity(0.5),
+                        width: 1.0,
+                      ),
                       boxShadow: [
                         BoxShadow(
                           color: themeStore.isDarkMode ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.1),
@@ -161,17 +169,25 @@
                       children: [
                         Row(
                           children: [
-                            Checkbox(
-                                checkColor: textColor,
-                                activeColor: Colors.white,
-                                value: selectedMeals.contains("Breakfast"),
-                                onChanged: (bool? val) {
-                                  _onMealChanged("Breakfast", val);
-                                }
+                            Theme(
+                              data: ThemeData(
+                                checkboxTheme: CheckboxThemeData(
+                                  side: BorderSide(color: borderColor, width: 1.5),
+                                  fillColor: WidgetStateProperty.all(theme.primaryColor),
+                                ),
+                              ),
+                              child: Checkbox(
+                                  checkColor: themeStore.isDarkMode? darktextColor : textColor,
+                                 // activeColor: Colors.white,
+                                  value: selectedMeals.contains("Breakfast"),
+                                  onChanged: (bool? val) {
+                                    _onMealChanged("Breakfast", val);
+                                  }
 
+                              ),
                             ),
                             SizedBox(width: 12),
-                            Text("Breakfast", style: theme.textTheme.titleMedium?.copyWith(color: _textColor)),
+                            Text("Breakfast", style: theme.textTheme.titleMedium?.copyWith(color: themeStore.isDarkMode? darkgreyColor: iconColor)),
                             Spacer(),
                             if(ison && selectedMeals.contains("Breakfast"))
                               Container(
@@ -188,16 +204,24 @@
                         ),
                         Row(
                           children: [
-                            Checkbox(
-                                checkColor: textColor,
-                                activeColor: Colors.white,
-                                value: selectedMeals.contains("Lunch"),
-                                onChanged: (bool? val) {
-                                  _onMealChanged("Lunch", val);
-                                }
+                            Theme(
+                              data: ThemeData(
+                                checkboxTheme: CheckboxThemeData(
+                                  side: BorderSide(color: borderColor, width: 1.5),
+                                  fillColor: WidgetStateProperty.all(theme.primaryColor),
+                                ),
+                              ),
+                              child: Checkbox(
+                                  checkColor: themeStore.isDarkMode? darktextColor : textColor,
+                                 // activeColor: Colors.white,
+                                  value: selectedMeals.contains("Lunch"),
+                                  onChanged: (bool? val) {
+                                    _onMealChanged("Lunch", val);
+                                  }
+                              ),
                             ),
                             SizedBox(width: 12),
-                            Text("Lunch", style: theme.textTheme.titleMedium?.copyWith(color: _textColor)),
+                            Text("Lunch", style: theme.textTheme.titleMedium?.copyWith(color: themeStore.isDarkMode? darkgreyColor: iconColor)),
                             Spacer(),
                             if(ison && selectedMeals.contains("Lunch"))
                                 Container(
@@ -214,16 +238,24 @@
                         ),
                         Row(
                           children: [
-                            Checkbox(
-                                checkColor: textColor,
-                                activeColor: Colors.white,
-                                value: selectedMeals.contains("Snacks"),
-                                onChanged: (bool? val) {
-                                  _onMealChanged("Snacks", val);
-                                }
+                            Theme(
+                              data: ThemeData(
+                                checkboxTheme: CheckboxThemeData(
+                                  side: BorderSide(color: borderColor, width: 1.5),
+                                  fillColor: WidgetStateProperty.all(theme.primaryColor),
+                                ),
+                              ),
+                              child: Checkbox(
+                                  checkColor: themeStore.isDarkMode? darktextColor : textColor,
+                                 // activeColor: Colors.white,
+                                  value: selectedMeals.contains("Snacks"),
+                                  onChanged: (bool? val) {
+                                    _onMealChanged("Snacks", val);
+                                  }
+                              ),
                             ),
                             SizedBox(width: 12),
-                            Text("Snacks", style: theme.textTheme.titleMedium?.copyWith(color: _textColor)),
+                            Text("Snacks", style: theme.textTheme.titleMedium?.copyWith(color: themeStore.isDarkMode? darkgreyColor: iconColor)),
                             Spacer(),
                             if(ison && selectedMeals.contains("Snacks"))
                               Container(
@@ -240,16 +272,24 @@
                         ),
                         Row(
                           children: [
-                            Checkbox(
-                                checkColor: textColor,
-                                activeColor: Colors.white,
+                            Theme(
+                              data: ThemeData(
+                                checkboxTheme: CheckboxThemeData(
+                                  side: BorderSide(color: borderColor, width: 1.5),
+                                  fillColor: WidgetStateProperty.all(theme.primaryColor),
+                                ),
+                              ),
+                              child: Checkbox(
+                                checkColor: themeStore.isDarkMode? darktextColor : textColor,
+                                //activeColor: Colors.white,
                                 value: selectedMeals.contains("Dinner"),
                                 onChanged: (bool? val) {
                                   _onMealChanged("Dinner", val);
-                                }
+                                },
+                              ),
                             ),
                             SizedBox(width: 12),
-                            Text("Dinner", style: theme.textTheme.titleMedium?.copyWith(color: _textColor)),
+                            Text("Dinner", style: theme.textTheme.titleMedium?.copyWith(color: themeStore.isDarkMode? darkgreyColor: iconColor)),
                             Spacer(),
                             if(ison && selectedMeals.contains("Dinner"))
                               Container(
@@ -298,7 +338,9 @@
                               color: themeStore.isDarkMode ? darkBluish : greyColor,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Icon(Icons.currency_rupee),
+                            child: MyIcon(iconPath: "assets/images/rup.svg",
+                            color:themeStore.isDarkMode? darkgreyColor: iconColor,
+                            ),
                           ),
                         ),
                         border: InputBorder.none,
@@ -332,7 +374,9 @@
                               color: themeStore.isDarkMode ? darkBluish : greyColor,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Image.asset("assets/images/calendar.png"),
+                            child: MyIcon(iconPath: "assets/images/calender.svg",
+                              color: themeStore.isDarkMode? darkgreyColor: iconColor,
+                            ),
                           ),
                         ),
                         border: InputBorder.none,
@@ -352,11 +396,22 @@
                   SizedBox(height: height * 0.15),
                   GestureDetector(
                     onTap: () async {
-                      if(_selectedFrequency == null ) {
-                        showSnackbar(context, Colors.red, "Select Frequency");
+                      final numValue = num.tryParse(_amountController.text);
+                      if (numValue == null || numValue < 0) {
+                        showSnackbar(context, Colors.red, "Enter a valid amount");
+                      }else{
+                        if(_selectedFrequency == null ) {
+                          showSnackbar(context, Colors.red, "Select Frequency");
+                        }else{
+
+                          //other validations are done inside the save function
+
+                          save(selectedMeals, _planController.text!, _amountController.text!, _selectedFrequency!);
+                        }
                       }
-                      save(selectedMeals, _planController.text!, _amountController.text!, _selectedFrequency!);
-                    },
+
+
+                      },
                     child: Container(
                       alignment: Alignment.center,
                       width: double.infinity,
@@ -411,7 +466,7 @@
           store.addPlan(newPlan);
 
           showSnackbar(context, Colors.green, "Plan saved successfully!");
-          Navigator.pushReplacement(
+          Navigator.pop(
             context,
             MaterialPageRoute(builder: (context) => DashboardPage()),
           );

@@ -6,8 +6,8 @@ import 'package:food_management/services/api_service.dart';
 import 'package:food_management/stores/theme_store.dart';
 import 'package:food_management/theme/themedata.dart';
 import 'package:provider/provider.dart';
-
 import '../stores/meal_plan_store.dart';
+import '../widgets/custom_widget.dart';
 
 class MyPlan extends StatefulWidget {
   MyPlan({super.key});
@@ -17,17 +17,13 @@ class MyPlan extends StatefulWidget {
 }
 
 class _MyPlanState extends State<MyPlan> {
-  bool _loading = true;
+
 
   @override
   void initState() {
     super.initState();
     final store = Provider.of<MealPlanStore>(context, listen: false);
-    store.loadInitialPlans(ApiLayer()).then((_) {
-      setState(() {
-        _loading = false;
-      });
-    });
+    store.loadInitialPlans(ApiLayer());
   }
 
   @override
@@ -36,7 +32,7 @@ class _MyPlanState extends State<MyPlan> {
 
     return Observer(
       builder: (_) {
-        if (_loading) {
+        if (store.isloading) {
           return Center(child: CircularProgressIndicator(color: bluishColor ,));
         }
 
@@ -89,7 +85,7 @@ class PlanTemplate extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: height*0.0096,horizontal: width*0.055),
       child: Container(
 
-        height: n<=2 ? height*0.15 : height*0.185,
+        //height: n<=2 ? height*0.15 : height*0.203,
         width: width*0.88,
         decoration: BoxDecoration(
           color: theme.primaryColor,
@@ -105,30 +101,20 @@ class PlanTemplate extends StatelessWidget {
         child: Column(
 
           children: [
-            Container(
-              padding: EdgeInsets.only(left: 16),
-              alignment: Alignment.centerLeft,
-              height: height*0.043,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: theme.colorScheme.primary,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(12),topRight: Radius.circular(12)),
-              ),
-              child: Row(
-                children: [
-                  Text(currentplan.name,style: theme.textTheme.titleMedium,),
-                  SizedBox(width: 4,),
-                  Text("(${currentplan.frequency})",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w400,color: Colors.black87),)
-                ],
-              ),
-            ),
 
+            DottedContainer(
+              height: height * 0.049,
+              name: currentplan.name,
+              frequency: currentplan.frequency,
+              textStyle: theme.textTheme.titleMedium!,
+              backgroundColor: theme.colorScheme.primary,
+            ),
 
             Column(
               children: [
                 for (int i = 0; i < (n / 2).ceil(); i++)
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32.0,vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 36.0,vertical: 8),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -145,14 +131,21 @@ class PlanTemplate extends StatelessWidget {
             ),
 
             
-            Spacer(),
+            SizedBox(height: 10,),
             Container(
               padding: EdgeInsets.only(left: 16),
               alignment: Alignment.centerLeft,
               height: height*0.043,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: theme.colorScheme.secondary.withOpacity(0.50),
+                color: theme.colorScheme.secondary.withOpacity(0.2),
+                  border: Border(
+                    top: BorderSide.none,
+                    left: BorderSide(width: 0.8, color: theme.colorScheme.secondary.withOpacity(0.25)),
+                    right: BorderSide(width: 0.8, color: theme.colorScheme.secondary.withOpacity(0.25)),
+                    bottom: BorderSide(width: 0.8, color: theme.colorScheme.secondary.withOpacity(0.25)),
+                  ),
+
                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12),bottomRight: Radius.circular(12)),
               ),
               child: Row(

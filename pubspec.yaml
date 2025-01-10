@@ -39,6 +39,8 @@ dependencies:
   provider:
   path_provider:
   shared_preferences:
+  flutter_svg:
+  dotted_border:
 
 
 dev_dependencies:
