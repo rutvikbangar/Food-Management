@@ -20,6 +20,14 @@ import 'package:food_management/widgets/custom_widget.dart';
       final Color _textColor = Color(0xff717171);
       TextEditingController _planController = TextEditingController();
       TextEditingController _amountController = TextEditingController();
+      TextEditingController _breakfastController = TextEditingController(text: '30');
+      TextEditingController _lunchController = TextEditingController(text: '80');
+      TextEditingController _snacksController = TextEditingController(text: '30');
+      TextEditingController _dinnerController = TextEditingController(text: '80');
+      FocusNode _breakfastFocusNode = FocusNode();
+      FocusNode _lunchFocusNode = FocusNode();
+      FocusNode _snacksFocusNode = FocusNode();
+      FocusNode _dinnerFocusNode = FocusNode();
       FocusNode _planFocusNode = FocusNode();
       FocusNode _amountFocusNode = FocusNode();
       List<String> selectedMeals = [];
@@ -44,11 +52,20 @@ import 'package:food_management/widgets/custom_widget.dart';
           _selectedFrequency = value;
         });
     }
+
+
       @override
       void dispose() {
-
+        _breakfastController.dispose();
+        _lunchController.dispose();
+        _snacksController.dispose();
+        _dinnerController.dispose();
         _planController.dispose();
         _amountController.dispose();
+        _breakfastFocusNode.dispose();
+        _lunchFocusNode.dispose();
+        _snacksFocusNode.dispose();
+        _dinnerFocusNode.dispose();
         _planFocusNode.dispose();
         _amountFocusNode.dispose();
         super.dispose();
@@ -87,6 +104,7 @@ import 'package:food_management/widgets/custom_widget.dart';
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
+                      style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: themeStore.isDarkMode?Colors.white:Colors.black),
                       controller: _planController,
                       focusNode: _planFocusNode,
                       decoration: InputDecoration(
@@ -190,16 +208,7 @@ import 'package:food_management/widgets/custom_widget.dart';
                             Text("Breakfast", style: theme.textTheme.titleMedium?.copyWith(color: themeStore.isDarkMode? darkgreyColor: iconColor)),
                             Spacer(),
                             if(ison && selectedMeals.contains("Breakfast"))
-                              Container(
-                                alignment: Alignment.center,
-                                height: 32,width: 72,
-                                decoration: BoxDecoration(
-                                  color: theme.primaryColor,
-                                  border: Border.all(color: Color(0xffA6A6A6)),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                  child: Text("₹ 30"),
-                              )
+                              SubPriceContainer(theme: theme, textEditingController: _breakfastController, focusNode: _breakfastFocusNode)
                           ],
                         ),
                         Row(
@@ -224,16 +233,7 @@ import 'package:food_management/widgets/custom_widget.dart';
                             Text("Lunch", style: theme.textTheme.titleMedium?.copyWith(color: themeStore.isDarkMode? darkgreyColor: iconColor)),
                             Spacer(),
                             if(ison && selectedMeals.contains("Lunch"))
-                                Container(
-                                  alignment: Alignment.center,
-                              height: 32,width: 72,
-                              decoration: BoxDecoration(
-                                color: theme.primaryColor,
-                                border: Border.all(color: Color(0xffA6A6A6)),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Text("₹ 80"),
-                            )
+                                SubPriceContainer(theme: theme, textEditingController: _lunchController, focusNode: _lunchFocusNode)
                           ],
                         ),
                         Row(
@@ -258,16 +258,7 @@ import 'package:food_management/widgets/custom_widget.dart';
                             Text("Snacks", style: theme.textTheme.titleMedium?.copyWith(color: themeStore.isDarkMode? darkgreyColor: iconColor)),
                             Spacer(),
                             if(ison && selectedMeals.contains("Snacks"))
-                              Container(
-                                alignment: Alignment.center,
-                                height: 32,width: 72,
-                                decoration: BoxDecoration(
-                                  color: theme.primaryColor,
-                                  border: Border.all(color: Color(0xffA6A6A6)),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text("₹ 30"),
-                              )
+                              SubPriceContainer(theme: theme, textEditingController: _snacksController, focusNode: _snacksFocusNode)
                           ],
                         ),
                         Row(
@@ -281,7 +272,7 @@ import 'package:food_management/widgets/custom_widget.dart';
                               ),
                               child: Checkbox(
                                 checkColor: themeStore.isDarkMode? darktextColor : textColor,
-                                //activeColor: Colors.white,
+
                                 value: selectedMeals.contains("Dinner"),
                                 onChanged: (bool? val) {
                                   _onMealChanged("Dinner", val);
@@ -292,16 +283,7 @@ import 'package:food_management/widgets/custom_widget.dart';
                             Text("Dinner", style: theme.textTheme.titleMedium?.copyWith(color: themeStore.isDarkMode? darkgreyColor: iconColor)),
                             Spacer(),
                             if(ison && selectedMeals.contains("Dinner"))
-                              Container(
-                                alignment: Alignment.center,
-                                height: 32,width: 72,
-                                decoration: BoxDecoration(
-                                  color: theme.primaryColor,
-                                  border: Border.all(color: Color(0xffA6A6A6)),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(("₹ 80")),
-                              )
+                              SubPriceContainer(theme: theme, textEditingController: _dinnerController, focusNode: _dinnerFocusNode)
                           ],
                         ),
                       ],
@@ -322,6 +304,7 @@ import 'package:food_management/widgets/custom_widget.dart';
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
+                      style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: themeStore.isDarkMode?Colors.white:Colors.black),
                       controller: _amountController,
                       focusNode: _amountFocusNode,
                       keyboardType: TextInputType.number,
@@ -363,7 +346,7 @@ import 'package:food_management/widgets/custom_widget.dart';
                     child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         labelText: 'Select Frequency',
-                        labelStyle: theme.textTheme.titleMedium?.copyWith(color: _textColor),
+                        labelStyle: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: _textColor),
                         prefixIcon: Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: Container(
@@ -386,18 +369,25 @@ import 'package:food_management/widgets/custom_widget.dart';
                         value: frequency,
                         child: Text(
                           frequency,
-                          style: theme.textTheme.titleMedium?.copyWith(color: _textColor),
+                            style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: themeStore.isDarkMode?Colors.white:Colors.black),
+
                         ),
                       ))
                           .toList(),
                       onChanged: _onFrequencyChanged,
+                      dropdownColor: theme.primaryColor,
+                      icon: Padding(
+                        padding: const EdgeInsets.only(right: 20.0,bottom: 10),
+                        child: MyIcon(iconPath: "assets/icons/down.svg",color: _textColor,size: 10,),
+                      ),
                     ),
                   ),
                   SizedBox(height: height * 0.15),
                   GestureDetector(
                     onTap: () async {
+
                       final numValue = num.tryParse(_amountController.text);
-                      if (numValue == null || numValue < 0) {
+                      if (numValue == null || numValue <= 0) {
                         showSnackbar(context, Colors.red, "Enter a valid amount");
                       }else{
                         if(_selectedFrequency == null ) {
@@ -405,8 +395,11 @@ import 'package:food_management/widgets/custom_widget.dart';
                         }else{
 
                           //other validations are done inside the save function
-
-                          save(selectedMeals, _planController.text!, _amountController.text!, _selectedFrequency!);
+                          List<String> breakdown =  breakDown(selectedMeals);
+                          if (breakdown.isEmpty){
+                            return;
+                          }
+                          save(selectedMeals, _planController.text!, _amountController.text!, _selectedFrequency!,breakdown);
                         }
                       }
 
@@ -432,28 +425,76 @@ import 'package:food_management/widgets/custom_widget.dart';
           ),
         );
       }
-      void save(List<String> selectedMeals, String plan, String amount, String frequency) async {
+
+      List<String> breakDown(List<String> selectedMeals) {
+        List<String> breakdown = [];
+        if(selectedMeals.isEmpty){
+          showSnackbar(context, Colors.red, "No meal selected");
+          return [];
+        }
+        if (selectedMeals.contains("Breakfast")) {
+          final bval = num.tryParse(_breakfastController.text);
+          if (bval == null || bval < 0) {
+            showSnackbar(context, Colors.red, "Breakfast price is invalid");
+            return [];
+          } else {
+            breakdown.add("b${_breakfastController.text}");
+          }
+        }
+
+        if (selectedMeals.contains("Lunch")) {
+          final lval = num.tryParse(_lunchController.text);
+          if (lval == null || lval < 0) {
+            showSnackbar(context, Colors.red, "Lunch price is invalid");
+            return [];
+          } else {
+            breakdown.add("l${_lunchController.text}");
+          }
+        }
+
+        if (selectedMeals.contains("Snacks")) {
+          final sval = num.tryParse(_snacksController.text);
+          if (sval == null || sval < 0) {
+            showSnackbar(context, Colors.red, "Snacks price is invalid");
+            return [];
+          } else {
+            breakdown.add("s${_snacksController.text}");
+          }
+        }
+
+        if (selectedMeals.contains("Dinner")) {
+          final dval = num.tryParse(_dinnerController.text);
+          if (dval == null || dval < 0) {
+            showSnackbar(context, Colors.red, "Dinner price is invalid");
+            return [];
+          } else {
+            breakdown.add("d${_dinnerController.text}");
+          }
+        }
+
+        return breakdown;
+      }
+
+
+
+
+      void save(List<String> selectedMeals, String plan, String amount, String frequency,List<String> breakdown) async {
         print("Selected Meals: $selectedMeals");
         print("Plan: $plan");
         print("Amount: $amount");
         print("Frequency: $frequency");
-
+        print("breakdown: $breakdown");
+        plan = plan.trim();
         if (selectedMeals.isEmpty || plan.isEmpty || amount.isEmpty || frequency.isEmpty) {
-          showSnackbar(context, Colors.red, "All fields required");
+          showSnackbar(context, Colors.red, "Plan name required");
         } else {
-          int intAmount = 0;
-          try {
-            intAmount = int.parse(amount);
-          } catch (e) {
-            showSnackbar(context, Colors.red, "Invalid amount entered");
-            return;
-          }
           int id = await api.getNextId();
           Plan newPlan = Plan(
             id: id,
             name: plan,
             frequency: frequency,
-            amount: intAmount,
+            breakdown: breakdown,
+            amount: amount,
             meals: [
               for (int i = 0; i < selectedMeals.length; i++)
                 Meal(id: i + 1, type: selectedMeals[i], startTime: "", endTime: ""),
@@ -473,3 +514,49 @@ import 'package:food_management/widgets/custom_widget.dart';
         }
       }
     }
+
+
+class SubPriceContainer extends StatelessWidget {
+  const SubPriceContainer({
+    super.key,
+    required this.theme,
+    required this.textEditingController,
+    required this.focusNode,
+  });
+
+  final ThemeData theme;
+  final TextEditingController textEditingController;
+  final FocusNode focusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.topCenter,
+      height: 32,width: 72,
+      decoration: BoxDecoration(
+        color: theme.primaryColor,
+        border: Border.all(color: Color(0xffA6A6A6)),
+        borderRadius: BorderRadius.circular(8),
+      ),
+        child: Row(
+          children: [
+            SizedBox(width: 1,),
+            Icon(Icons.currency_rupee,size: 15,),
+            Expanded(
+              child: TextField(
+                style: TextStyle(color: theme.brightness==Brightness.dark? Colors.white : Colors.black ),
+                controller: textEditingController,
+                focusNode: focusNode,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(bottom: 16),
+                ),
+
+              ),
+            ),
+          ],
+        ),
+    );
+  }
+}

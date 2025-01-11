@@ -146,7 +146,7 @@ class _DashboardPageState extends State<DashboardPage> with SingleTickerProvider
 
             MyPlan(),
             Menu(),
-            Center(child: Text("3 Tab Content")),
+            Center(child: Text("3 Tab Content"),),
             Center(child: Text("4 Tab Content")),
           ],
         ),

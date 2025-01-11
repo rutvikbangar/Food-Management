@@ -4,7 +4,8 @@
       "id": 1,
       "name": "Option Plan 1",
       "frequency": "daily",
-      "amount": 500,
+      "breakdown": ["b30","l80","s30","d80"],
+      "amount": "500",
       "meals": [
         {
           "id": 1,

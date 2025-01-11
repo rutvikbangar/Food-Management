@@ -2,11 +2,12 @@
 // one plan contain different meals
 import 'meal_model.dart';
 
-class Plan{
+class Plan {
   final int id;
   final String name;
   final String frequency;
-  final int amount;
+  final String amount;
+  final List<String> breakdown;
   final List<Meal> meals;
 
   Plan({
@@ -14,6 +15,7 @@ class Plan{
     required this.name,
     required this.frequency,
     required this.amount,
+    required this.breakdown,
     required this.meals,
   });
 
@@ -23,6 +25,7 @@ class Plan{
       name: json['name'],
       frequency: json['frequency'],
       amount: json['amount'],
+      breakdown: List<String>.from(json['breakdown']),
       meals: (json['meals'] as List)
           .map((meal) => Meal.fromJson(meal))
           .toList(),
@@ -35,6 +38,7 @@ class Plan{
       'name': name,
       'frequency': frequency,
       'amount': amount,
+      'breakdown': breakdown,
       'meals': meals.map((meal) => meal.toJson()).toList(),
     };
   }
