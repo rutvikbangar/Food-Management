@@ -41,6 +41,7 @@ dependencies:
   shared_preferences:
   flutter_svg:
   dotted_border:
+  inner_shadow_widget:
 
 
 dev_dependencies:

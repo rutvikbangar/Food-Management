@@ -103,13 +103,16 @@ class PlanTemplate extends StatelessWidget {
           children: [
 
             DottedContainer(
-              height: height * 0.049,
+              height: height * 0.0476 ,
               name: currentplan.name,
               frequency: currentplan.frequency,
               textStyle: theme.textTheme.titleMedium!,
               backgroundColor: theme.colorScheme.primary,
             ),
-
+            CustomPaint(
+              size: Size(double.infinity, 1),
+              painter: DottedLinePainter(color: Color(0xff717171).withOpacity(0.5)),
+            ),
             Column(
               children: [
                 for (int i = 0; i < (n / 2).ceil(); i++)
@@ -138,7 +141,7 @@ class PlanTemplate extends StatelessWidget {
               height: height*0.043,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: theme.colorScheme.secondary.withOpacity(0.2),
+                color: themeStore.isDarkMode?darkBluish : Color(0xffe2f2ff).withOpacity(0.8),
                   border: Border(
                     top: BorderSide.none,
                     left: BorderSide(width: 0.8, color: theme.colorScheme.secondary.withOpacity(0.25)),
@@ -154,7 +157,7 @@ class PlanTemplate extends StatelessWidget {
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
-                    child: Text("₹ ${currentplan.amount}",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: textColor),),
+                    child: Text("₹ ${currentplan.amount}",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color:theme.colorScheme.tertiary),),
                   )
                 ],
               ),

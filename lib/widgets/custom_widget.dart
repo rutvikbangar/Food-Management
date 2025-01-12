@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+//svg
+
 class MyIcon extends StatelessWidget {
   final String iconPath;
   final Color color;
@@ -23,7 +25,7 @@ class MyIcon extends StatelessWidget {
   }
 }
 
-
+ // dotted line
 
 class DottedLinePainter extends CustomPainter {
   final double strokeWidth;
@@ -102,11 +104,7 @@ class DottedContainer extends StatelessWidget {
               ],
             ),
           ),
-          Spacer(),
-          CustomPaint(
-            size: Size(double.infinity, 1),
-            painter: DottedLinePainter(color: Color(0xff717171).withOpacity(0.5)),
-          ),
+
         ],
       ),
     );

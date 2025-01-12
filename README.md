@@ -23,6 +23,7 @@ The project is organized into the following main directories:
     
      - `widgets/`: Reusable UI components, including:
         - `snackbar_widget.dart`
+        - `custom_widget.dart`
 
      - `services/`: Contains utility services, such as:
        - `api_service.dart`: Handles local JSON data for managing meal plans.
@@ -92,20 +93,4 @@ The observables in these stores automatically update the UI when data changes, p
 3. **Navigation Flow:**
    - An "Add Today's Menu" button was added to the menu screen, enabling users to navigate to the Add Menu page.
 
-
-
-   ## Images
-
-   Here are some screenshots of the Food Management Project:
-
-
-| ![Image 1](assets/app/s1l.jfif) | ![Image 2](assets/app/ss2l.jfif) | ![Image 3](assets/app/s3l.jfif) | ![Image 4](assets/app/s4l.jfif) |
-|-------------------------------------|-------------------------------------|-------------------------------------|-------------------------------------|
-
-
-
-| ![Image 1](assets/app/ss1d.jfif) | ![Image 2](assets/app/ss2d.jfif) | ![Image 3](assets/app/s4d.jfif) | ![Image 4](assets/app/s3d.jfif) |
-|-------------------------------------|-------------------------------------|-------------------------------------|-------------------------------------|
-
-
-
+    

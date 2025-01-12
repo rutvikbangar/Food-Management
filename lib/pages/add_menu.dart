@@ -36,6 +36,7 @@ class _AddMenuState extends State<AddMenu> {
 
 
   void addItemType(String meal, TextEditingController controller, bool isVeg, String startTime, String endTime) {
+    controller.text = controller.text.trim();
     if (controller.text.isNotEmpty) {
       setState(() {
         // Store the time range for the meal
@@ -225,7 +226,7 @@ class _MealSectionState extends State<MealSection> {
                 spreadRadius: 0,
               ),
             ],
-            border: Border.all(color: borderColor),
+            border: Border.all(color: borderColor.withOpacity(themeStore.isDarkMode? 1 : 0.5)),
             borderRadius: BorderRadius.circular(8.0),
           ),
           child: Column(
@@ -255,7 +256,7 @@ class _MealSectionState extends State<MealSection> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: Text("Start Time", style: TextStyle(color: textColor, fontSize: 11)),
+                        child: Text("Start Time", style: TextStyle(color: theme.colorScheme.tertiary, fontSize: 11)),
                       ),
                       Row(
                         children: [
@@ -305,7 +306,7 @@ class _MealSectionState extends State<MealSection> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: Text("End Time", style: TextStyle(color: textColor, fontSize: 11)),
+                        child: Text("End Time", style: TextStyle(color: theme.colorScheme.tertiary, fontSize: 11)),
                       ),
                       Container(
                         alignment: Alignment.center,
@@ -376,8 +377,8 @@ class _MealSectionState extends State<MealSection> {
                       ),
                     ),
                     child: Checkbox(
-                      checkColor: themeStore.isDarkMode? darktextColor : textColor,
-                      //activeColor: Colors.white,
+                      checkColor: theme.colorScheme.tertiary,
+
                       value: isVeg,
                       onChanged: (bool? value) {
                         if (value != null) {
@@ -398,7 +399,7 @@ class _MealSectionState extends State<MealSection> {
                       ),
                     ),
                     child: Checkbox(
-                      checkColor: themeStore.isDarkMode? darktextColor : textColor,
+                      checkColor: theme.colorScheme.tertiary,
                       
                       //activeColor: Colors.white,
                       value: !isVeg,
@@ -483,8 +484,8 @@ class AddedItem extends StatelessWidget {
             ),
           ),
           child: Checkbox(
-            checkColor: themeStore.isDarkMode? darktextColor : textColor,
-            //activeColor: Colors.white,
+            checkColor: theme.colorScheme.tertiary,
+
             value: type == "veg"?true:false,
             onChanged: (bool? value) {
 
@@ -501,8 +502,8 @@ class AddedItem extends StatelessWidget {
             ),
           ),
           child: Checkbox(
-            checkColor: themeStore.isDarkMode? darktextColor : textColor,
-            //activeColor: Colors.white,
+            checkColor: theme.colorScheme.tertiary,
+
             value: type == "veg"?false: true,
             onChanged: (bool? value) {
             },

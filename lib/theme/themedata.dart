@@ -18,6 +18,7 @@ final ThemeData lightTheme = ThemeData(
   colorScheme: ColorScheme.light(
     primary: greyColor,
     secondary: bluishColor,
+    tertiary: textColor,
   ),
   textTheme: TextTheme(
       titleLarge: TextStyle(color: Colors.black, fontSize: 20,fontWeight: FontWeight.w700),
@@ -33,6 +34,7 @@ final ThemeData darkTheme = ThemeData(
   colorScheme: ColorScheme.dark(
     primary: darkgreyColor,
     secondary: darkBluish ,
+    tertiary: darktextColor
   ),
   textTheme: TextTheme(
       titleLarge: TextStyle(color: Colors.white, fontSize: 20,fontWeight:FontWeight.w700),

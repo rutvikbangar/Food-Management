@@ -97,8 +97,16 @@ import 'package:food_management/widgets/custom_widget.dart';
                     width: width * 0.90,
                     height: height * 0.074,
                     decoration: BoxDecoration(
+                      color: theme.primaryColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            offset: Offset(0, 4),
+                            blurRadius: 8,
+                          ),
+                        ],
                       border: Border.all(
-                        color: borderColor.withOpacity(0.5),
+                        color: borderColor.withOpacity(themeStore.isDarkMode?1:0.5),
                         width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(12),
@@ -140,6 +148,8 @@ import 'package:food_management/widgets/custom_widget.dart';
                           thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
                             return themeStore.isDarkMode ? Color(0xFF2E303C) : Colors.white;
                           }),
+                          trackOutlineWidth: WidgetStateProperty.all(0),
+                          trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
                           trackColor: WidgetStateProperty.resolveWith<Color>((states) {
                             if (!states.contains(WidgetState.selected)) {
                               return Color(0xffA6A6A6);
@@ -175,7 +185,7 @@ import 'package:food_management/widgets/custom_widget.dart';
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: themeStore.isDarkMode ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.1),
+                          color:  Colors.black.withOpacity(0.1),
                           offset: Offset(0, 4),
                           blurRadius: 8,
                         ),
@@ -195,7 +205,7 @@ import 'package:food_management/widgets/custom_widget.dart';
                                 ),
                               ),
                               child: Checkbox(
-                                  checkColor: themeStore.isDarkMode? darktextColor : textColor,
+                                  checkColor: theme.colorScheme.tertiary,
                                  // activeColor: Colors.white,
                                   value: selectedMeals.contains("Breakfast"),
                                   onChanged: (bool? val) {
@@ -221,7 +231,7 @@ import 'package:food_management/widgets/custom_widget.dart';
                                 ),
                               ),
                               child: Checkbox(
-                                  checkColor: themeStore.isDarkMode? darktextColor : textColor,
+                                  checkColor: theme.colorScheme.tertiary,
                                  // activeColor: Colors.white,
                                   value: selectedMeals.contains("Lunch"),
                                   onChanged: (bool? val) {
@@ -246,7 +256,7 @@ import 'package:food_management/widgets/custom_widget.dart';
                                 ),
                               ),
                               child: Checkbox(
-                                  checkColor: themeStore.isDarkMode? darktextColor : textColor,
+                                  checkColor: theme.colorScheme.tertiary,
                                  // activeColor: Colors.white,
                                   value: selectedMeals.contains("Snacks"),
                                   onChanged: (bool? val) {
@@ -271,7 +281,7 @@ import 'package:food_management/widgets/custom_widget.dart';
                                 ),
                               ),
                               child: Checkbox(
-                                checkColor: themeStore.isDarkMode? darktextColor : textColor,
+                                checkColor: theme.colorScheme.tertiary,
 
                                 value: selectedMeals.contains("Dinner"),
                                 onChanged: (bool? val) {
@@ -297,8 +307,16 @@ import 'package:food_management/widgets/custom_widget.dart';
                     width: width * 0.90,
                     height: height * 0.074,
                     decoration: BoxDecoration(
+                      color: theme.primaryColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color:  Colors.black.withOpacity(0.1),
+                          offset: Offset(0, 4),
+                          blurRadius: 8,
+                        ),
+                      ],
                       border: Border.all(
-                        color: borderColor.withOpacity(0.5),
+                        color: borderColor.withOpacity(themeStore.isDarkMode?1:0.5),
                         width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(12),
@@ -337,8 +355,16 @@ import 'package:food_management/widgets/custom_widget.dart';
                     width: width * 0.90,
                     height: height * 0.074,
                     decoration: BoxDecoration(
+                      color: theme.primaryColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color:  Colors.black.withOpacity(0.1),
+                          offset: Offset(0, 4),
+                          blurRadius: 8,
+                        ),
+                      ],
                       border: Border.all(
-                        color: borderColor.withOpacity(0.5),
+                        color: borderColor.withOpacity(themeStore.isDarkMode?1:0.5),
                         width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(12),

@@ -77,12 +77,12 @@ class _DashboardPageState extends State<DashboardPage> with SingleTickerProvider
               children: [
                 MyIcon(
                     iconPath: "assets/icons/add.svg",
-                    color: themeStore.isDarkMode? darktextColor : textColor,
+                    color: theme.colorScheme.tertiary,
                 ),
                 SizedBox(width: 5),
                 Text(
                   "Add Plan",
-                  style: TextStyle(color: themeStore.isDarkMode? darktextColor : textColor),
+                  style: TextStyle(color: theme.colorScheme.tertiary),
                 )
               ],
             ),
@@ -101,7 +101,7 @@ class _DashboardPageState extends State<DashboardPage> with SingleTickerProvider
           controller: tabController,
           indicatorSize: TabBarIndicatorSize.tab,
           indicatorPadding: EdgeInsets.symmetric(horizontal: width * 0.02),
-          indicatorColor: themeStore.isDarkMode? darktextColor: textColor,
+          indicatorColor: theme.colorScheme.tertiary,
           dividerColor: Colors.transparent,
           labelColor: textColor,
           unselectedLabelColor: themeStore.isDarkMode ? Color(0xffBABABA) : Color(0xff454545),
@@ -120,7 +120,7 @@ class _DashboardPageState extends State<DashboardPage> with SingleTickerProvider
                           return MyIcon(
                             iconPath: widget.img[i],
                             color: isSelected
-                                ? (themeStore.isDarkMode ? darktextColor : textColor)
+                                ? (theme.colorScheme.tertiary)
                                 : (themeStore.isDarkMode ? darkgreyColor : iconColor),
                           );
                         },
@@ -154,6 +154,8 @@ class _DashboardPageState extends State<DashboardPage> with SingleTickerProvider
     );
   }
 }
+
+
 
 
 
